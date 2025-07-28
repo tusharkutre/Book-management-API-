@@ -19,7 +19,7 @@ router.get('/books', (req, res) =>{
     res.send(books);
 })
 
-//getting a specific book by id dynamically
+//getting a specific book by id dynamically(:)
 // using req.params to get the id from the URL
 router.get('/books/:id', (req, res) =>{
     // logic to find a book by its id
@@ -93,15 +93,3 @@ router.delete('/books/:id', (req, res) => {
 });
 
 export default router;
-
-// getting a specific book by name
-router.get('/books/name/:name', (req, res) => {
-    const bookName = req.params.name;
-    // Find the book with the given name (case-insensitive)
-    const book = books.find(b => b.name.toLowerCase() === bookName.toLowerCase());
-    if (book) {
-        res.send(book);
-    } else {
-        res.status(404).send({ error: 'Book not found' });
-    }
-});
