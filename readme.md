@@ -5,4 +5,4 @@
 # features :
 - CRUD operations,
 - RESTful APIs
-- search a book by Id
+- search a book by id & name

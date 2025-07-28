@@ -35,6 +35,20 @@ router.get('/books/:id', (req, res) =>{
     }
 })
 
+//getting a specific book by name
+router.get('/books/name', (req, res) => {
+    const bookName = req.query; // Get the book name from query parameters
+    console.log(bookName);
+    // Find the book with the given name via req.query
+    const book = books.find(b => b.name.toLowerCase() === bookName.toLowerCase());
+    if (book) {
+        res.send(book);
+    }
+    else{
+        res.status(404).send({ error : 'Book not found'});
+    }
+})
+
 // Adding a new book
 router.post('/books', (req, res) => {
     const newBook = req.body; // Assuming the book data is sent in the request body
@@ -79,3 +93,15 @@ router.delete('/books/:id', (req, res) => {
 });
 
 export default router;
+
+// getting a specific book by name
+router.get('/books/name/:name', (req, res) => {
+    const bookName = req.params.name;
+    // Find the book with the given name (case-insensitive)
+    const book = books.find(b => b.name.toLowerCase() === bookName.toLowerCase());
+    if (book) {
+        res.send(book);
+    } else {
+        res.status(404).send({ error: 'Book not found' });
+    }
+});
