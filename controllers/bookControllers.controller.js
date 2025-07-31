@@ -1,12 +1,6 @@
 //sending json data
 // each book has its own id, name, and price
-
-// async-await is not used here as there is no database connection or asynchronous operation involved.  
-const books = [
-    { id: 1, name: 'Science', price: 100 },
-    { id: 2, name: 'English', price: 200 },
-    { id: 3, name: 'history', price: 300 }
-];
+import books from '../models/book.js'; 
 
 //business logic to handle book operations
 const getBooks = (req,res) => {
