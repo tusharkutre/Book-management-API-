@@ -1,11 +1,11 @@
-//sending json data
 // each book has its own id, name, and price
-import books from '../models/book.js'; 
+import { getBook, saveBook , getBookById , deleteBookById} from '../models/book.model.js'; // Importing the functions to interact with the database
 
 //business logic to handle book operations
-const getBooks = (req,res) => {
+const getBooks = async(req,res) => {
     try {
-        res.send(books); // Respond with the list of books
+        const books = await getBook(); // Fetch books from the database
+        res.send(books)
     } catch (error) {
         console.error('Error fetching books:', error);
         throw new Error('Could not retrieve books');
@@ -13,12 +13,12 @@ const getBooks = (req,res) => {
 }
 
 // book by id
-const getBookById = (req , res) => {
+const bookById = async(req , res) => {
   try{
     if(req.params.id){
-        const book = books.find(b => b.id === parseInt(req.params.id));
+        const book = await getBookById(req.params.id);
         if(book){
-            res.send(book);
+            res.send(book); //send the book by id
         }
         else{
             res.status(404).send({ error: 'Book not found' });
@@ -31,36 +31,31 @@ const getBookById = (req , res) => {
     }
 }
 
-const getBookByName = (req, res) => {
-    try{
-        const bookName = req.query; // Get the book name from query parameters
-        const book = books.find(b => b.name.toLowerCase() === bookName.toLowerCase());
-        if (book) {
-            res.send(book);
-        } else {
-            res.status(404).send({ error: 'Book not found' });
-        }
-    } catch (error) {
-        console.error('Error fetching book by name:', error);
-        res.status(500).send({ error: 'Could not retrieve book' });
-    }
-}
+// const searchBookByName = (req, res) => {
+//     try{
+//         const bookName = req.query; // Get the book name from query parameters
+//         const book = books.find(b => b.name.toLowerCase() === bookName.toLowerCase());
+//         if (book) {
+//             res.send(book);
+//         } else {
+//             res.status(404).send({ error: 'Book not found' });
+//         }
+//     } catch (error) {
+//         console.error('Error fetching book by name:', error);
+//         res.status(500).send({ error: 'Could not retrieve book' });
+//     }
+// }
 
-const addBook = (req, res) => {
-    try {
-        const newBook = req.body; // Assuming the book data is sent in the request body
-        if (newBook && newBook.name && newBook.price) {
-            newBook.id = books.length + 1; // Assign a new id
-            books.push(newBook);
-            res.status(201).send(newBook); // Respond with the created book
-        } else {
-            res.status(400).send({ error: 'Invalid book data' });
-        }
-    } catch (error) {
-        console.error('Error adding book:', error);
-        res.status(500).send({ error: 'Could not add book' });
-    }
-}
+// To save a new book to the database
+
+const addBook = async (req, res) => {
+  try {
+    const bookId = await saveBook(req.body);
+    res.status(201).send({ id: bookId, ...req.body });
+  } catch (error) {
+    res.status(500).send({ error: 'Could not create a book' });
+  }
+};
 
 const updateBook = (req , res) =>{
     const bookId = parseInt(req.params.id);
@@ -77,17 +72,16 @@ const updateBook = (req , res) =>{
     }
 }
 
+//deleting a book by id
 const deleteBook = (req, res) =>{
-    const bookId = parseInt(req.params.id);
-    const bookIndex = books.findIndex(b => b.id === bookId);
+    const bookId = deleteBookById(req.params.id);
     
-    if (bookIndex !== -1) {
-        const deletedBook = books.splice(bookIndex, 1);
-        res.send(deletedBook[0]); // Respond with the deleted book
+    if (bookId) {
+        res.send(bookId); // Response with the deleted book
     } else {
         res.status(404).send({ error: 'Book not found' });
     }
 }
 
 // Exporting the function to be used in routes
-export { getBooks , getBookById , getBookByName , addBook , updateBook , deleteBook };
+export { getBooks , bookById , addBook , updateBook , deleteBook };
