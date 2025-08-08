@@ -1,6 +1,7 @@
 // express backend server
 import express from 'express';
 import connectDB  from './db/db.js'; // Import the database connection function
+import cors from 'cors';
 
 import { mainRoutes } from './routing/routes.js';
 import { authRoutes } from './middleware/auth.js';
@@ -8,6 +9,7 @@ import { authRoutes } from './middleware/auth.js';
 const app = express();
 const PORT =  process.env.PORT || 3000; // Default to 3000 if PORT is not set
 
+app.use(cors()); // cors middleware from express to resolve cors issue
 app.use(express.json()); // Middleware to parse JSON bodies
 
 app.use('/', authRoutes);

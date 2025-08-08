@@ -13,11 +13,12 @@ router.get('/books', getBooks);
 
 router.get('/books/:id', bookById)
 
-router.post('/books', addBook);
+router.post('/books', addBook); //create
 
-router.put('/books/:id', updateBook)
+router.put('/books/:id', updateBook) //update
 
-router.delete('/books/:id', deleteBook);
+router.delete('/books/:id', deleteBook); //delete
 
 export const mainRoutes = router;
-// router.get('/books/name', getBookByName);
+
+// router.get('/books/name', searchBookByName);

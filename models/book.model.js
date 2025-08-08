@@ -10,6 +10,7 @@ let db;
 const getBook = async () => {
   try {
     if (!db) throw new Error("Database not initialized");
+    //fetching all the books data from the db
     const [rows] = await db.execute("SELECT * FROM book");
     return rows;
   } catch (error) {
