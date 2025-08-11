@@ -1,6 +1,8 @@
 const BASE_URL = "http://localhost:3000";
 const HEADERS = { "Content-Type": "application/json" };
 
+// frontend api calls to the backend
+
 // GET all books
 export const getBooks = async () => {
 	const response = await fetch(`${BASE_URL}/books`, {

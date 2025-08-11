@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { getBooks } from "../../apis/api";
 import BookCard from "./BookCard";
+import Modal from "../modal/Modal";
 
 const Book = () => {
   const [books, setBooks] = useState([]); //getting data into array
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   //fetching books data from the db
   const fetchBooksData = async () => {
@@ -32,6 +34,11 @@ const Book = () => {
       <section>
         <h2 className="text-xl font-bold mb-4">Books List</h2>
         <div>
+
+          <button className="bg-slate-200 cursor-pointer p-2 rounded-xl" onClick={() => setIsModalOpen(true)}>
+            create +
+          </button>
+
           {books.map((book) => (
             <BookCard 
               book={book} 
@@ -41,6 +48,7 @@ const Book = () => {
           ))}
         </div>
       </section>
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 };
