@@ -1,8 +1,13 @@
 # Book store API(Backend)
 
-# Desc : created a simple book management app using express
+# Desc : created a simple book management app using express and MySQL 
 
 # Tech Stack :
+ - Frontend
+   - React.js
+   - TailwindCSS
+   - JWT & cookies
+
  - Backend : 
     - RESTful apis
     - express.js
