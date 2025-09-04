@@ -1,5 +1,9 @@
 const BASE_URL = "http://localhost:3000";
 const HEADERS = { "Content-Type": "application/json" };
+const FETCH_OPTIONS = {
+  credentials: 'include', // Include cookies in all requests
+  headers: HEADERS
+};
 
 // frontend api calls to the backend
 
@@ -7,7 +11,7 @@ const HEADERS = { "Content-Type": "application/json" };
 export const getBooks = async () => {
 	const response = await fetch(`${BASE_URL}/books`, {
 		method: "GET",
-		headers: HEADERS,
+		...FETCH_OPTIONS,
 	});
 	if (!response.ok) throw new Error("Failed to fetch books");
 	return await response.json();
@@ -17,7 +21,7 @@ export const getBooks = async () => {
 export const getBookById = async (id) => {
 	const response = await fetch(`${BASE_URL}/books/${id}`, {
 		method: "GET",
-		headers: HEADERS,
+		...FETCH_OPTIONS,
 	});
 	if (!response.ok) throw new Error("Failed to fetch book");
 	return await response.json();
@@ -27,7 +31,7 @@ export const getBookById = async (id) => {
 export const postBook = async (data) => {
 	const response = await fetch(`${BASE_URL}/books`, {
 		method: "POST",
-		headers: HEADERS,
+		...FETCH_OPTIONS,
 		body: JSON.stringify(data),
 	});
 	if (!response.ok) throw new Error("Failed to add book");
@@ -38,7 +42,7 @@ export const postBook = async (data) => {
 export const putBook = async (id, data) => {
 	const response = await fetch(`${BASE_URL}/books/${id}`, {
 		method: "PUT",
-		headers: HEADERS,
+		...FETCH_OPTIONS,
 		body: JSON.stringify(data),
 	});
 	if (!response.ok) throw new Error("Failed to update book");
@@ -49,7 +53,7 @@ export const putBook = async (id, data) => {
 export const deleteBook = async (id) => {
 	const response = await fetch(`${BASE_URL}/books/${id}`, {
 		method: "DELETE",
-		headers: HEADERS,
+		...FETCH_OPTIONS,
 	});
 	if (!response.ok) throw new Error("Failed to delete book");
 	return await response.json();

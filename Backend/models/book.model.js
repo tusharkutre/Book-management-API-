@@ -1,10 +1,10 @@
 import connectDB from "../db/db.js";
 
+// async-await is not used here as there is no database connection or asynchronous operation involved.
 let db;
 (async () => {
   db = await connectDB();
 })();
-// async-await is not used here as there is no database connection or asynchronous operation involved.
 
 // get books from the database
 const getBook = async () => {
