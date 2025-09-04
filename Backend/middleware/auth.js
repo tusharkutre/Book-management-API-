@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAuthMe, postLogin, postRegister } from "../controllers/auth.controller.js";
+import { getAuthMe, logoutUser, postLogin, postRegister } from "../controllers/auth.controller.js";
 
 const router = Router();
 
@@ -11,5 +11,6 @@ router.post('/register', postRegister);
 
 // Auth check endpoint - relies on verifyAuthentication middleware setting req.user
 router.get('/auth/me', getAuthMe);
+router.get('/logout', logoutUser);
 
 export const authRoutes = router; //renaming the router as authRoutes

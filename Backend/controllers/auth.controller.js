@@ -115,7 +115,16 @@ const getAuthMe = (req, res) => {
     return res.send(`<h1>Hello ${req.user.name}</h1>`);
 }
 
-export { postRegister , postLogin , getAuthMe }
+const logoutUser = (req , res) => {
+    res.clearCookie('access_token',{
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax'
+    })
+    return res.status(200).json({ success: true, message: 'Logged out successfully' });
+}
+
+export { postRegister , postLogin , getAuthMe , logoutUser };
 
   // Basic input form validation
 //   if (!name || !email || !password) {

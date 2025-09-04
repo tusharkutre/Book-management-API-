@@ -58,3 +58,13 @@ export const deleteBook = async (id) => {
 	if (!response.ok) throw new Error("Failed to delete book");
 	return await response.json();
 };
+
+// LOGOUT user (clears cookie on server)
+export const logout = async () => {
+	const response = await fetch(`${BASE_URL}/logout`, {
+		method: "GET",
+		...FETCH_OPTIONS,
+	});
+	if (!response.ok) throw new Error("Failed to logout");
+	return await response.json();
+};

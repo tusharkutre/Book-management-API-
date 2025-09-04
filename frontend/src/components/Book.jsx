@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { getBooks } from "../../apis/api";
+import { getBooks , logout } from "../../apis/api";
 import BookCard from "./BookCard";
 import Modal from "../modal/Modal";
 import { useNavigate } from "react-router-dom";
@@ -45,9 +45,14 @@ const Book = () => {
     }
   }, [location.state]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      navigate("/login", { replace: true });
+    }
   };
 
   return (
