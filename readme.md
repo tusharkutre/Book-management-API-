@@ -6,15 +6,15 @@
  - Frontend
    - React.js
    - TailwindCSS
-   - JWT & cookies
 
  - Backend : 
-    - RESTful apis
+    - RESTful Api's
+    - JWT & cookies
     - express.js
-    - mySQL DB
+    - MySQL DB
 
 # features :
-- Added mySQL database
+- Added Login & Logout
 - followed latest MVC pattern for backend code optimizations,
 - CRUD operations,
 - RESTful APIs
