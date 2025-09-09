@@ -4,8 +4,8 @@ import { getAuthMe, logoutUser, postLogin, postRegister } from "../controllers/a
 const router = Router();
 
 //login controller function for login page
-// loginData? --> "app enter" : "stick to the <Login/> page only"
 
+//auth routes
 router.post('/login' , postLogin);
 router.post('/register', postRegister);
 

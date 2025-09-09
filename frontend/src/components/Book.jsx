@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { getBooks , logout } from "../../apis/api";
+import { getBooks, logout } from "../../apis/api";
 import BookCard from "./BookCard";
 import Modal from "../modal/Modal";
 import { useNavigate } from "react-router-dom";
+import LogoutButton from "./buttons/LogoutButton";
+import LikedBooks from "./buttons/LikedBooks";
 
 const Book = () => {
   const [books, setBooks] = useState([]); //getting data into array
@@ -45,6 +47,7 @@ const Book = () => {
     }
   }, [location.state]);
 
+  // handle logout logic
   const handleLogout = async () => {
     try {
       await logout();
@@ -55,9 +58,24 @@ const Book = () => {
     }
   };
 
+  // track liked book ids
+  const [likedIds, setLikedIds] = useState(new Set());
+
+  const handleToggleLike = (bookId, liked) => {
+    setLikedIds((prev) => {
+      const next = new Set(prev);
+      if (liked) {
+        next.add(bookId);
+      } else {
+        next.delete(bookId);
+      }
+      return next;
+    });
+  };
+
   return (
     <>
-      <section>
+      <section className="min-h-screen w-full p-4">
         <div className="flex justify-between items-center mb-4 p-2">
           <h2 className="text-xl font-bold mb-4">Book App</h2>
 
@@ -66,7 +84,7 @@ const Book = () => {
               <div
                 className={`w-fit  p-2 rounded-md ${
                   message.type === "success"
-                    ? "bg-slate-100 border border-slate-400 text-slate-700"
+                    ? "bg-green-100 border border-green-400 text-green-700"
                     : "bg-red-100 border border-red-400 text-red-700"
                 }`}
               >
@@ -74,28 +92,22 @@ const Book = () => {
               </div>
             )}
 
-            <button
-              onClick={handleLogout}
-              className="bg-slate-200 cursor-pointer ring-1 ring-slate-400 px-2 py-2 rounded-xl"
-            >
-              Logout
-            </button>
+            <LogoutButton name="Logout" onClick={handleLogout} />
           </div>
-
         </div>
-        <div>
-          <button
-            className="bg-slate-200 cursor-pointer p-2 rounded-xl"
-            onClick={() => setIsModalOpen(true)}
-          >
-            create book
-          </button>
 
+        <LogoutButton name="Create Book 📕" onClick={() => setIsModalOpen(true)} />
+
+        <LikedBooks label="Liked Books" count={likedIds.size} />
+
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {books.map((book) => (
             <BookCard
               book={book}
               key={book.id}
               onDelete={removeBookFromState}
+              onToggleLike={handleToggleLike}
+              isInitiallyLiked={likedIds.has(book.id)}
             />
           ))}
         </div>

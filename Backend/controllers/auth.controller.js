@@ -79,7 +79,7 @@ const postLogin = async(req,res) => {
         });
         console.log('Token generated successfully:', token ? 'Yes' : 'No');
 
-        // Set cookie with proper options
+        // Set cookie with token
         res.cookie('access_token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production', // true in production
@@ -115,6 +115,7 @@ const getAuthMe = (req, res) => {
     return res.send(`<h1>Hello ${req.user.name}</h1>`);
 }
 
+// removing cookie on logout
 const logoutUser = (req , res) => {
     res.clearCookie('access_token',{
         httpOnly: true,

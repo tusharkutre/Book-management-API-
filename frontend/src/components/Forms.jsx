@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate , NavLink } from "react-router-dom";
-import FormButton from "./buttons/FormButton";
 import { useAuth } from "../context/AuthContext";
+import FormButton from "./buttons/FormButton";
 
 const Forms = () => {
   const navigate = useNavigate();
@@ -23,7 +23,6 @@ const Forms = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     try {
       const response = await fetch("http://localhost:3000/login", {
@@ -40,7 +39,7 @@ const Forms = () => {
       if (response.ok) {
         console.log("Login successful!");
 
-        const successMessage = { type: "success", text: `Welcome, ${data.user.name}!` };
+        const successMessage = { type: "success", text: `✅ Welcome, ${data.user.name}!` };
         setMessage(successMessage);
         // Refresh auth state so ProtectedRoute allows access, then navigate
         await login();
@@ -58,6 +57,7 @@ const Forms = () => {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
       <div className="w-full max-w-md">
+        {/* success/error flash messages from backend */}
         {message && (
           <div
             className={`mb-4 p-3 rounded-lg text-sm ${
@@ -122,12 +122,7 @@ const Forms = () => {
             </div>
 
             <div className="pt-2">
-              <button
-                type="submit"
-                className="w-full inline-flex items-center justify-center rounded-lg bg-slate-900 text-white font-medium px-4 py-2 shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition"
-              >
-                Login
-              </button>
+              <FormButton name={"Sign In"} />
             </div>
           </form>
         </div>

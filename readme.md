@@ -14,6 +14,7 @@
     - mySQL DB
 
 # features :
+- Like & Dislike a book
 - Added mySQL database
 - followed latest MVC pattern for backend code optimizations,
 - CRUD operations,

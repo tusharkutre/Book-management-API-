@@ -5,7 +5,7 @@ const FormButton = ({ name }) => {
     <>
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white px-4 cursor-pointer py-2 mb-5 rounded-md hover:bg-blue-600"
+        className="w-full cursor-pointer inline-flex items-center justify-center rounded-lg bg-slate-900 text-white font-medium px-4 py-2 shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition"
       >
         {name}
       </button>
