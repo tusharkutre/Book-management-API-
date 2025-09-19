@@ -1,5 +1,6 @@
 // each book has its own id, name, and price
 import { getBook, saveBook , getBookById , deleteBookById} from '../models/book.model.js'; // Importing the functions to interact with the database
+import { userRelation, bookRelation } from '../models/user.model.js';
 
 //business logic to handle book operations
 const getBooks = async(req,res) => {
@@ -50,8 +51,9 @@ const bookById = async(req , res) => {
 
 const addBook = async (req, res) => {
   try {
-    const bookId = await saveBook(req.body);
-    res.status(201).send({ id: bookId, ...req.body });
+    const authenticatedUserId = req.user && req.user.id ? req.user.id : null;
+    const bookId = await saveBook(req.body, authenticatedUserId);
+    res.status(201).send({ id: bookId, ...req.body, user_id: authenticatedUserId });
   } catch (error) {
     res.status(500).send({ error: 'Could not create a book' });
   }
@@ -83,5 +85,31 @@ const deleteBook = (req, res) =>{
     }
 }
 
+// relational controllers
+const getBooksByUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const books = await userRelation(userId);
+    return res.status(200).send(books);
+  } catch (error) {
+    console.error('Error fetching books by user:', error);
+    return res.status(500).send({ error: 'Could not retrieve books for user' });
+  }
+};
+
+const getBookOwner = async (req, res) => {
+  try {
+    const { bookId } = req.params;
+    const owner = await bookRelation(bookId);
+    if (!owner) {
+      return res.status(404).send({ error: 'Owner not found for this book' });
+    }
+    return res.status(200).send(owner);
+  } catch (error) {
+    console.error('Error fetching book owner:', error);
+    return res.status(500).send({ error: 'Could not retrieve book owner' });
+  }
+};
+
 // Exporting the function to be used in routes
-export { getBooks , bookById , addBook , updateBook , deleteBook };
+export { getBooks , bookById , addBook , updateBook , deleteBook , getBooksByUser , getBookOwner };

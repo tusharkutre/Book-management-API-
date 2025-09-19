@@ -32,11 +32,11 @@ const getBookById = async (id) => {
 };
 
 //inserting or saving a book into the database
-const saveBook = async (book) => {
+const saveBook = async (book, userId) => {
   if (!db) throw new Error("Database not initialized");
   const [result] = await db.execute(
-    "INSERT INTO book(name, price) VALUES (?, ?)",
-    [book.name, book.price] // fields in the db
+    "INSERT INTO book(name, price, user_id) VALUES (?, ?, ?)",
+    [book.name, book.price, userId] // fields in the db
   );
   console.log("Book saved successfully");
   return result.insertId;

@@ -1,4 +1,4 @@
-import { verifyToken } from "../models/user.model.js";
+import { verifyToken } from "../tokens/token.js";
 
 //middleware to verify authentication
 const verifyAuthentication = (req, res, next) => {

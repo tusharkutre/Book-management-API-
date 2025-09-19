@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getBooks , addBook, updateBook , deleteBook, bookById } from '../controllers/bookControllers.controller.js';
+import { getBooks , addBook, updateBook , deleteBook, bookById , getBooksByUser, getBookOwner } from '../controllers/bookControllers.controller.js';
 import multer from 'multer';
 
 const router = Router();
@@ -39,6 +39,9 @@ router.post('/upload', upload.single('image'), (req, res) =>{
     console.log(req.file);
     res.send('File uploaded successfully');
 })
+
+router.get('/users/:userId/books', requireAuth, getBooksByUser);
+router.get('/books/:bookId/owner', requireAuth, getBookOwner);
 
 //calling the controller function to get all books via 
 router.get('/books', requireAuth, getBooks);

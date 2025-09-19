@@ -5,7 +5,7 @@ const FETCH_OPTIONS = {
   headers: HEADERS
 };
 
-// frontend api calls to the backend
+// frontend api calls to the backend(so that they can communicate with each other)
 
 // GET all books
 export const getBooks = async () => {
