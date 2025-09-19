@@ -20,7 +20,7 @@
 - Like & Dislike a book
 - Added mySQL database
 - Added Login & Logout
-- followed latest MVC pattern for backend code optimizations,
-- CRUD operations,
+- followed latest MVC pattern for backend code optimizations
+- CRUD operations
 - RESTful APIs
 - search a book by id
