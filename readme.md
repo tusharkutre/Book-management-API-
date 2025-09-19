@@ -15,8 +15,6 @@
 
 # features :
 - Token generation and storing into cookie.
-- a single user can create multiple books
-- each book must belong to that user only not other users , if other users register and   login then they should see new books or create one.
 - Like & Dislike a book
 - Added mySQL database
 - Added Login & Logout
